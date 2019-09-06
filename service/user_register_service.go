@@ -6,6 +6,14 @@ import (
 	"jiyue.im/pkg/errno"
 )
 
+// @Summary 邮箱方式注册用户
+// @Description Add a new user
+// @Tags USER
+// @Accept  json
+// @Produce  json
+// @Param service body model.RegisterRequest true "邮箱方式注册用户"
+// @Success 200 {object} model.CreateResponse
+// @Router /v1/user/register [post]
 func UserRegister(c *gin.Context) {
 	var r model.RegisterRequest
 	if err := c.Bind(&r); err != nil {

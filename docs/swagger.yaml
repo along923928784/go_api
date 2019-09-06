@@ -1,0 +1,55 @@
+basePath: '{{.BasePath}}'
+definitions:
+  model.CreateResponse:
+    properties:
+      id:
+        type: integer
+      nickname:
+        type: string
+    type: object
+  model.RegisterRequest:
+    properties:
+      email:
+        type: string
+      nickname:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - nickname
+    - password
+    type: object
+host: '{{.Host}}'
+info:
+  contact: {}
+  description: '{{.Description}}'
+  license: {}
+  title: '{{.Title}}'
+  version: '{{.Version}}'
+paths:
+  /v1/user/register:
+    post:
+      consumes:
+      - application/json
+      description: Add a new user
+      parameters:
+      - description: 邮箱方式注册用户
+        in: body
+        name: service
+        required: true
+        schema:
+          $ref: '#/definitions/model.RegisterRequest'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.CreateResponse'
+            type: object
+      summary: 邮箱方式注册用户
+      tags:
+      - USER
+swagger: "2.0"
