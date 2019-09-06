@@ -2,6 +2,10 @@
 
 https://github.com/along923928784/go_api
 
+## 小程序扫码预览
+
+![小程序码](https://github.com/along923928784/go_api/image/wx.png)
+
 ## 重要: 如何运行
 
 git clone https://github.com/along923928784/go_api.git
@@ -64,6 +68,6 @@ go run main.go
 
 ## 神奇的接口文档
 
-服务启动后: http://localhost:3000/swagger/index.html
+服务启动后: http://localhost:8080/swagger/index.html
 
 接口文档位于项目swagger目录下。请阅读目录内的文档
