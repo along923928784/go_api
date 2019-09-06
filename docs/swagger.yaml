@@ -20,6 +20,31 @@ definitions:
     - nickname
     - password
     type: object
+  model.Token:
+    properties:
+      token:
+        type: string
+    type: object
+  model.TokenRequest:
+    properties:
+      account:
+        type: string
+      secret:
+        type: string
+      type:
+        type: integer
+    required:
+    - account
+    type: object
+  service.Response:
+    properties:
+      code:
+        type: integer
+      data:
+        type: object
+      message:
+        type: string
+    type: object
 host: '{{.Host}}'
 info:
   contact: {}
@@ -28,11 +53,33 @@ info:
   title: '{{.Title}}'
   version: '{{.Version}}'
 paths:
+  /v1/classic/latest:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: x-auth-token
+        in: header
+        name: x-auth-token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"content": "人生不能像做菜，把所有的料准备好才下锅","favnums": 0,"id": 7,"image":
+            "images/movie.8.png","index": 8,"like_status": true,"pubdate": "2019-04-05T17:12:04+08:00","title":
+            "李安《饮食男女 》","type": 100}'
+          schema:
+            $ref: '#/definitions/service.Response'
+            type: object
+      summary: 获取最新期刊
+      tags:
+      - Classic
   /v1/user/register:
     post:
       consumes:
       - application/json
-      description: Add a new user
       parameters:
       - description: 邮箱方式注册用户
         in: body
@@ -51,5 +98,28 @@ paths:
             type: object
       summary: 邮箱方式注册用户
       tags:
-      - USER
+      - User
+  /v1/user/token:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: token
+        in: body
+        name: token
+        required: true
+        schema:
+          $ref: '#/definitions/model.TokenRequest'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1Njc3Njk4MDYsImlhdCI6MTU2Nzc2MjYwNiwiaWQiOjEsIm5iZiI6MTU2Nzc2MjYwNiwic2NvcGUiOjh9.-VlL6oAa8mMD2Wd0Os1in1V5T9sdcwv6OCupihZKZNY"}'
+          schema:
+            $ref: '#/definitions/model.Token'
+            type: object
+      summary: 获取token
+      tags:
+      - User
 swagger: "2.0"

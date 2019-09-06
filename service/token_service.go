@@ -11,6 +11,13 @@ import (
 	"jiyue.im/pkg/token"
 )
 
+// @Summary 获取token
+// @Tags User
+// @Accept  json
+// @Produce  json
+// @Param token body model.TokenRequest true "token"
+// @Success 200 {object} model.Token "{"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1Njc3Njk4MDYsImlhdCI6MTU2Nzc2MjYwNiwiaWQiOjEsIm5iZiI6MTU2Nzc2MjYwNiwic2NvcGUiOjh9.-VlL6oAa8mMD2Wd0Os1in1V5T9sdcwv6OCupihZKZNY"}"
+// @Router /v1/user/token  [post]
 func GetToken(c *gin.Context) {
 	var t model.TokenRequest
 
@@ -32,12 +39,16 @@ func GetToken(c *gin.Context) {
 	case enum.USER_MOBILE:
 		fmt.Println(t.Type)
 	default:
-		fmt.Println("not a vowel")
+		SendResponse(c, errno.ErrType, nil)
 	}
 
 }
 
 func emailLogin(c *gin.Context, acction, secret string) {
+	if secret == "" {
+		SendResponse(c, errno.ErrBind, nil)
+		return
+	}
 	d, err := model.GetUser(acction)
 	if err != nil {
 		SendResponse(c, errno.ErrUserNotFound, nil)
@@ -54,6 +65,7 @@ func emailLogin(c *gin.Context, acction, secret string) {
 		SendResponse(c, errno.ErrToken, nil)
 		return
 	}
+	// token := model.Token{Token: t}
 	SendResponse(c, nil, model.Token{Token: t})
 
 }

@@ -37,11 +37,17 @@ func codeToToken(c *gin.Context, code string) {
 	}
 	defer response.Body.Close()
 	body, _ := ioutil.ReadAll(response.Body)
+	// fmt.Println(string(body))
 
 	var info Info
 	err = json.Unmarshal([]byte(body), &info)
 	if err != nil {
 		SendResponse(c, errno.ErrWx, nil)
+		return
+	}
+	if info.Openid == "" {
+		SendResponse(c, errno.ErrWx, nil)
+		return
 	}
 
 	d, err := model.GetUserByOpenId(info.Openid)
@@ -50,6 +56,7 @@ func codeToToken(c *gin.Context, code string) {
 		err = d.RegisterByOpenId()
 		if err != nil {
 			SendResponse(c, errno.ErrWxOpenId, nil)
+			return
 		}
 	}
 

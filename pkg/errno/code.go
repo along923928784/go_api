@@ -20,4 +20,5 @@ var (
 	ErrWxOpenId  = &Errno{Code: 20105, Message: "注册openid失败"}
 	ErrForbbiden = &Errno{Code: 20106, Message: "权限不足"}
 	ErrNotFound  = &Errno{Code: 20107, Message: "资源未找到"}
+	ErrType      = &Errno{Code: 20108, Message: "不支持的类型"}
 )

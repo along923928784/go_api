@@ -8,6 +8,13 @@ import (
 	"jiyue.im/util"
 )
 
+// @Summary 获取最新期刊
+// @Tags Classic
+// @Accept  json
+// @Produce  json
+// @Param x-auth-token header string  true "x-auth-token"
+// @Success 200 {object} service.Response "{"content": "人生不能像做菜，把所有的料准备好才下锅","favnums": 0,"id": 7,"image": "images/movie.8.png","index": 8,"like_status": true,"pubdate": "2019-04-05T17:12:04+08:00","title": "李安《饮食男女 》","type": 100}"
+// @Router /v1/classic/latest [get]
 func GetLatest(c *gin.Context) {
 
 	ctx, b := c.Get("userContext")

@@ -7,8 +7,7 @@ import (
 )
 
 // @Summary 邮箱方式注册用户
-// @Description Add a new user
-// @Tags USER
+// @Tags User
 // @Accept  json
 // @Produce  json
 // @Param service body model.RegisterRequest true "邮箱方式注册用户"
