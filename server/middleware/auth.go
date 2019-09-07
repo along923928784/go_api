@@ -12,11 +12,6 @@ func AuthMiddleware(level int32) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// Parse the json web token.
 		ctx, err := token.ParseRequest(c)
-		// if err != nil || ctx.Scope < level {
-		// 	service.SendResponse(c, errno.ErrTokenInvalid, nil)
-		// 	c.Abort()
-		// 	return
-		// }
 		if err != nil {
 			service.SendResponse(c, errno.ErrTokenInvalid, nil)
 			c.Abort()
@@ -29,7 +24,7 @@ func AuthMiddleware(level int32) gin.HandlerFunc {
 			return
 		}
 
-		c.Set("userContext", ctx)
+		c.Set("UID", ctx.ID)
 		c.Next()
 	}
 }

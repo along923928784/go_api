@@ -18,3 +18,10 @@ func GetLatest() (*FlowModel, error) {
 	// d := DB.Exec("SELECT `id`, `index`, `art_id`, `type` FROM `tb_flow` AS `Flow` ORDER BY `Flow`.`index`").Find(&f)
 	return f, d.Error
 }
+
+func FlowOne(index int32) (*FlowModel,bool) {
+	f := &FlowModel{}
+	// d := DB.Where("index = ?", index).First(&f)
+	isFound := DB.Where("`index` = ?", index).First(f).RecordNotFound()
+	return f, isFound
+}

@@ -44,6 +44,23 @@ func GetToken(c *gin.Context) {
 
 }
 
+// @Summary 验证Token合法性
+// @Tags User
+// @Accept  json
+// @Produce  json
+// @Param x-auth-token header string  true "x-auth-token"
+// @Success 200 {object} service.Response "OK"
+// @Router /v1/user/token/verify [post]
+func VerifyToken(c *gin.Context) {
+	// ctx, b := c.Get("userContext")
+	// if !b {
+	// 	SendResponse(c, errno.ErrForbbiden, nil)
+	// }
+	// ID := ctx.(*token.Context).ID
+	// scope := ctx.(*token.Context).Scope
+	SendResponse(c, errno.OK, "OK")
+}
+
 func emailLogin(c *gin.Context, acction, secret string) {
 	if secret == "" {
 		SendResponse(c, errno.ErrBind, nil)
@@ -65,17 +82,6 @@ func emailLogin(c *gin.Context, acction, secret string) {
 		SendResponse(c, errno.ErrToken, nil)
 		return
 	}
-	// token := model.Token{Token: t}
 	SendResponse(c, nil, model.Token{Token: t})
 
-}
-
-func VerifyToken(c *gin.Context) {
-	// ctx, b := c.Get("userContext")
-	// if !b {
-	// 	SendResponse(c, errno.ErrForbbiden, nil)
-	// }
-	// ID := ctx.(*token.Context).ID
-	// scope := ctx.(*token.Context).Scope
-	SendResponse(c, errno.OK, nil)
 }

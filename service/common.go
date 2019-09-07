@@ -24,3 +24,13 @@ func SendResponse(c *gin.Context, err error, data interface{}) {
 		Data:    data,
 	})
 }
+
+func GetUid(c *gin.Context) (UID uint64) {
+	ID, b := c.Get("UID")
+	if !b {
+		SendResponse(c, errno.ErrForbbiden, nil)
+		return
+	}
+	UID = ID.(uint64)
+	return
+}

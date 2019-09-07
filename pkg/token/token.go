@@ -82,7 +82,7 @@ func Sign(ctx *gin.Context, c Context, secret string) (tokenString string, err e
 		"scope": c.Scope,
 		"nbf":   timeNow,
 		"iat":   timeNow,
-		"exp":   timeNow + 7200,
+		// "exp":   timeNow + 7200,
 	})
 	// Sign the token with the specified secret.
 	tokenString, err = token.SignedString([]byte(secret))

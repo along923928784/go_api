@@ -7,6 +7,16 @@ definitions:
       nickname:
         type: string
     type: object
+  model.ParamFavorReq:
+    properties:
+      id:
+        type: integer
+      type:
+        type: integer
+    required:
+    - id
+    - type
+    type: object
   model.RegisterRequest:
     properties:
       email:
@@ -53,6 +63,93 @@ info:
   title: '{{.Title}}'
   version: '{{.Version}}'
 paths:
+  /v1/classic/detail/{type}/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: x-auth-token
+        in: header
+        name: x-auth-token
+        required: true
+        type: string
+      - description: Type
+        in: path
+        name: type
+        required: true
+        type: integer
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '[{"id": 1,"image": "images/music.7.png","content": "无人问我粥可温
+            风雨不见江湖人", "title": "月之门《枫华谷的枫林》","fav_nums": 145,"type": 200,"url": "http://music.163.com/song/media/outer/url?id=393926.mp3"}]'
+          schema:
+            $ref: '#/definitions/service.Response'
+            type: object
+      summary: 获取期刊详情
+      tags:
+      - Classic
+  /v1/classic/favor/{type}/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: x-auth-token
+        in: header
+        name: x-auth-token
+        required: true
+        type: string
+      - description: Type
+        in: path
+        name: type
+        required: true
+        type: integer
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '[{"id": 1,"image": "images/music.7.png","content": "无人问我粥可温
+            风雨不见江湖人", "title": "月之门《枫华谷的枫林》","fav_nums": 145,"type": 200,"url": "http://music.163.com/song/media/outer/url?id=393926.mp3"}]'
+          schema:
+            $ref: '#/definitions/service.Response'
+            type: object
+      summary: 用户是否喜欢一个期刊
+      tags:
+      - Classic
+  /v1/classic/favors:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: x-auth-token
+        in: header
+        name: x-auth-token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"content": "人生不能像做菜，把所有的料准备好才下锅","favnums": 0,"id": 7,"image":
+            "images/movie.8.png","index": 8,"like_status": true,"pubdate": "2019-04-05T17:12:04+08:00","title":
+            "李安《饮食男女 》","type": 100}'
+          schema:
+            $ref: '#/definitions/service.Response'
+            type: object
+      summary: 获取用户喜欢的期刊
+      tags:
+      - Classic
   /v1/classic/latest:
     get:
       consumes:
@@ -76,6 +173,114 @@ paths:
       summary: 获取最新期刊
       tags:
       - Classic
+  /v1/classic/next/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: x-auth-token
+        in: header
+        name: x-auth-token
+        required: true
+        type: string
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{}'
+          schema:
+            $ref: '#/definitions/service.Response'
+            type: object
+      summary: 获取当前期刊的下一个期刊
+      tags:
+      - Classic
+  /v1/classic/previous/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: x-auth-token
+        in: header
+        name: x-auth-token
+        required: true
+        type: string
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{}'
+          schema:
+            $ref: '#/definitions/service.Response'
+            type: object
+      summary: 获取当前期刊的上一个期刊
+      tags:
+      - Classic
+  /v1/like/:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: x-auth-token
+        in: header
+        name: x-auth-token
+        required: true
+        type: string
+      - description: likeParam
+        in: body
+        name: likeParam
+        required: true
+        schema:
+          $ref: '#/definitions/model.ParamFavorReq'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{}'
+          schema:
+            $ref: '#/definitions/service.Response'
+            type: object
+      summary: 期刊点赞
+      tags:
+      - Like
+  /v1/like/cancel:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: x-auth-token
+        in: header
+        name: x-auth-token
+        required: true
+        type: string
+      - description: likeParam
+        in: body
+        name: likeParam
+        required: true
+        schema:
+          $ref: '#/definitions/model.ParamFavorReq'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{}'
+          schema:
+            $ref: '#/definitions/service.Response'
+            type: object
+      summary: 期刊取消点赞
+      tags:
+      - Like
   /v1/user/register:
     post:
       consumes:
@@ -120,6 +325,27 @@ paths:
             $ref: '#/definitions/model.Token'
             type: object
       summary: 获取token
+      tags:
+      - User
+  /v1/user/token/verify:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: x-auth-token
+        in: header
+        name: x-auth-token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/service.Response'
+            type: object
+      summary: 验证Token合法性
       tags:
       - User
 swagger: "2.0"

@@ -21,4 +21,8 @@ var (
 	ErrForbbiden = &Errno{Code: 20106, Message: "权限不足"}
 	ErrNotFound  = &Errno{Code: 20107, Message: "资源未找到"}
 	ErrType      = &Errno{Code: 20108, Message: "不支持的类型"}
+	ErrLike      = &Errno{Code: 20109, Message: "你已经喜欢了我了，不要花心哦"}
+	ErrDisLike   = &Errno{Code: 20110, Message: "不喜欢我了，还点什么！"}
+	ErrCreate    = &Errno{Code: 20111, Message: "写入失败"}
+	ErrDelete    = &Errno{Code: 20112, Message: "删除失败"}
 )

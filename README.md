@@ -6,6 +6,9 @@ https://github.com/along923928784/go_api
 
 ![小程序码](https://github.com/along923928784/go_api/blob/master/image/wx.png)
 
+## 部分接口文档
+![接口文档](https://github.com/along923928784/go_api/blob/master/image/test_api.png)
+
 ## 重要: 如何运行
 
 git clone https://github.com/along923928784/go_api.git
